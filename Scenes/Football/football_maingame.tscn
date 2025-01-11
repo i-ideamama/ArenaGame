@@ -1,0 +1,85 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4uk4yacehnx"]
+
+[ext_resource type="Script" path="res://Scripts/Football/football_scene_manager.gd" id="1_2l2iu"]
+[ext_resource type="PackedScene" uid="uid://cbr7ww82qetfy" path="res://Scenes/Football/player.tscn" id="1_5qov0"]
+[ext_resource type="PackedScene" uid="uid://dp0v0ge8yx24y" path="res://Scenes/Football/ball.tscn" id="3_620fj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nutq0"]
+size = Vector2(157, 2690)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wlipp"]
+size = Vector2(475, 119)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_2l2iu")
+PlayerScene = ExtResource("1_5qov0")
+
+[node name="SpawnLocations" type="Node2D" parent="."]
+
+[node name="0" type="Node2D" parent="SpawnLocations" groups=["PlayerSpawnPoint"]]
+position = Vector2(168, 1940)
+
+[node name="1" type="Node2D" parent="SpawnLocations" groups=["PlayerSpawnPoint"]]
+position = Vector2(520, 1933)
+
+[node name="2" type="Node2D" parent="SpawnLocations" groups=["PlayerSpawnPoint"]]
+position = Vector2(846, 1918)
+
+[node name="3" type="Node2D" parent="SpawnLocations" groups=["PlayerSpawnPoint"]]
+position = Vector2(204, 288)
+
+[node name="4" type="Node2D" parent="SpawnLocations" groups=["PlayerSpawnPoint"]]
+position = Vector2(496, 283)
+
+[node name="5" type="Node2D" parent="SpawnLocations" groups=["PlayerSpawnPoint"]]
+position = Vector2(827, 288)
+
+[node name="Ball" parent="." instance=ExtResource("3_620fj")]
+position = Vector2(529, 1112)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(1246, 1210)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-42.5, -6)
+shape = SubResource("RectangleShape2D_nutq0")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(715, -57)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(-42.5, -6)
+shape = SubResource("RectangleShape2D_nutq0")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(824, 2516)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+position = Vector2(-42.5, -6)
+shape = SubResource("RectangleShape2D_nutq0")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(-59, 1281)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(-42.5, -6)
+shape = SubResource("RectangleShape2D_nutq0")
+
+[node name="Goal1" type="Area2D" parent="." groups=["TopGoal"]]
+position = Vector2(955, 26)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal1"]
+shape = SubResource("RectangleShape2D_wlipp")
+debug_color = Color(0.570955, 0.388954, 1, 0.42)
+
+[node name="Goal2" type="Area2D" parent="." groups=["BottomGoal"]]
+position = Vector2(170, 2352)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal2"]
+shape = SubResource("RectangleShape2D_wlipp")
+debug_color = Color(0.570955, 0.388954, 1, 0.42)
+
+[connection signal="body_entered" from="Goal1" to="." method="_on_goal_1_body_entered"]
+[connection signal="body_entered" from="Goal2" to="." method="_on_goal_2_body_entered"]

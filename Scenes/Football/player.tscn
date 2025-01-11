@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://cbr7ww82qetfy"]
+
+[ext_resource type="Texture2D" uid="uid://bdrls2ebwnkea" path="res://icon.svg" id="1_nsdfv"]
+[ext_resource type="Script" path="res://Scripts/Football/player.gd" id="1_wanvx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rco42"]
+size = Vector2(128, 126)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5utg3"]
+size = Vector2(176, 176)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_r1uyn"]
+properties/0/path = NodePath(".:replicated_position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:replicated_rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:replicated_linear_velocity")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:replicated_angular_velocity")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[node name="Player" type="RigidBody2D"]
+gravity_scale = 0.0
+linear_damp = 1.0
+script = ExtResource("1_wanvx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+scale = Vector2(1.25, 1.25)
+shape = SubResource("RectangleShape2D_rco42")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("1_nsdfv")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, 5.96046e-08)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-4.05311e-06, 8.52346e-06)
+shape = SubResource("RectangleShape2D_5utg3")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_r1uyn")
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
